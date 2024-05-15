@@ -31,7 +31,6 @@
         }
     ],
     "family": "weaviate-task",
-    "executionRoleArn": "arn:aws:iam::${AWS_ACCOUNT_ID}:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "requiresAttributes": [
         {
