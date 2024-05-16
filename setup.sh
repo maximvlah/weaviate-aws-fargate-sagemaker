@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "Installing Weaviate Python Client..."
-pip install -U -q weaviate-client
+pip install -q weaviate-client
 echo "Creating ECS Cluster: weaviate-cluster..."
 aws ecs create-cluster --cluster-name weaviate-cluster > /dev/null
 echo "Creating ECS Task Definition: weaviate-task..."
@@ -14,19 +14,14 @@ echo "Configuring Default Security Group..."
 aws ec2 authorize-security-group-ingress --group-id ${AWS_SG} --protocol tcp --port 8080-50051 --cidr ${SM_IP}/32
 attempt=0
 while [ -z "${ENI_ID}" ]; do
+        echo "Waiting for Weaviate to become ready..."
         export TASK_ARN=$(aws ecs list-tasks --cluster weaviate-cluster --service weaviate-service --query 'taskArns[0]' --output text)
         export ENI_ID=$(aws ecs describe-tasks --cluster weaviate-cluster --tasks ${TASK_ARN} --query "tasks[*].attachments[*].details[?name=='networkInterfaceId'].value" --output text)
         sleep 2
-        if [ -z "${ENI_ID}"]; then
-                attempt=$((attempt + 1))
-                echo "TASK : ${TASK_ARN}"
-                echo "ENI_ID: ${ENI_ID}"
-                echo "Attempt ${attempt}"
-        else
-                echo "TASK: ${TASK_ARN}"
-                echo "ENI_ID: ${ENI_ID}"
-        fi
 done
 WEAVIATE_IP=$(aws ec2 describe-network-interfaces --network-interface-id ${ENI_ID} --query "NetworkInterfaces[0].Association.PublicIp" --output text)
+echo ""
+echo ""
+echo "Please use the following IP address to access your weaviate instance."
 echo "Weaviate Endpoint Reachable at: ${WEAVIATE_IP}"
 echo "Example usage: curl ${WEAVIATE_IP}:8080/v1/nodes"
