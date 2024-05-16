@@ -32,22 +32,7 @@
     ],
     "family": "weaviate-task",
     "networkMode": "awsvpc",
-    "requiresAttributes": [
-        {
-            "name": "ecs.capability.extensible-ephemeral-storage"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-        },
-        {
-            "name": "ecs.capability.task-eni"
-        }
-    ],
     "placementConstraints": [],
-    "compatibilities": [
-        "EC2",
-        "FARGATE"
-    ],
     "requiresCompatibilities": [
         "FARGATE"
     ],
@@ -59,6 +44,5 @@
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "tags": []
+    }
 }
