@@ -1,4 +1,8 @@
 # weaviate-aws-fargate
+
+## NOTE: Running the setup.sh script more than once will break python module dependencies at this time.
+## Creating a new notebook instance and re-running the full script is the recommended troubleshooting.
+
 1. Clone this repository.
 2. Use chmod to make the setup.sh script executable.
 ```
