@@ -22,7 +22,12 @@
                 }
             ],
             "essential": true,
-            "environment": [],
+            "environment": [
+                {
+                    "name": "ENABLE_MODULES",
+                    "value": "text2vec-aws,generative-aws"
+                }                 
+            ],
             "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
